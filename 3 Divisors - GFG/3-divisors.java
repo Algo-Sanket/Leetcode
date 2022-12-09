@@ -30,62 +30,42 @@ class GFG
 
 //User function Template for Java
 class Solution{
-
-    static ArrayList<Integer> threeDivisors(ArrayList<Long> query, int qn){
-
-        int n=0;
-
-        for(long q:query){
-
-            n=Math.max(n,(int)Math.sqrt(q));
-
-        }
-
-        boolean prime[]=new boolean[n+1];
-
-        Arrays.fill(prime,true);
-
-        for(int i=2;i<=n;i++){
-
-            if(prime[i]){
-
-                for(int j=i+i;j<=n;j+=i){
-
-                    prime[j]=false;
-
-                }
-
-            }
-
-        }
-
-        int dp[]=new int[n+1];
-
-        for(int i=2;i<=n;i++){
-
-            dp[i]=dp[i-1];
-
-            if(prime[i]){
-
-                dp[i]++;
-
-            }
-
-        }
-
-        ArrayList<Integer> ans=new ArrayList<>();
-
-        for(long q:query){
-
-            int root=(int)Math.sqrt(q);
-
-            ans.add(dp[root]);
-
-        }
-
-        return ans;
-
-    }
-
-}
+    static ArrayList<Integer> threeDivisors(ArrayList<Long> query, int q){
+        // code here
+        int n = 1000001;
+        boolean isPrime[] = new boolean[n];
+        seive(n,isPrime);
         
+        ArrayList<Integer> al  = new ArrayList<Integer>();
+        for(int j=0; j<q; j++)
+        {
+            int ans=0;
+            for(int i=2; i<=query.get(j); i++)
+            {
+                if(isPrime[i]==false)
+                {
+                    long curr_num = i*i;
+                    if(curr_num <=query.get(j))
+                    ans++;
+                    
+                    if(curr_num >= query.get(j))
+                    break;
+                }
+                
+            }
+            al.add(ans);
+        }
+        return al;
+    }
+   static void seive(int n, boolean arr[])
+    {
+        for(int p=2; p*p<n ;p++)
+        {
+            if(arr[p]==false)
+            for(int i=p*p ; i<n; i=i+p)
+            {
+                arr[i] = true;
+            }
+        }
+    }
+}
