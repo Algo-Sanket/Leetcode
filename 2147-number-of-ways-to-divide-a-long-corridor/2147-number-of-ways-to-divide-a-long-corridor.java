@@ -18,7 +18,6 @@ class Solution
             j = i;
         }
     }
-
     if (k % 2 == 0 && k > 0)
     {
         return (int) res;
